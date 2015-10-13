@@ -25,6 +25,7 @@ $(function() {
             for (var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].url).toBeDefined();
                 expect(allFeeds[i].url.length).not.toBe(0);
+                expect(allFeeds[i].url).not.toBe('');
             }
         });
 
@@ -33,6 +34,7 @@ $(function() {
             for (var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].name).toBeDefined();
                 expect(allFeeds[i].name.length).not.toBe(0);
+                expect(allFeeds[i].name).not.toBe('');
             }
          });
     });
@@ -40,23 +42,21 @@ $(function() {
     describe('the menu', function() {
 
          //Sets variables for teh relevant DOM elements
-         var menu = $( '.menu' );
-         var body = $( 'body' );
+         var menu = $('.menu');
+         var body = $('body');
 
-         //Checks to see if the menu is hidden by getting its position. If it is hidden its location is -12em
+         //Checks to see if the menu is hidden.
          it('is hidden by default', function() {
-            var expectedPosition = parseFloat($("body").css("font-size")) * -12;
-            var leftPosition = menu.position().left;
-            expect(leftPosition).toBe(expectedPosition);
+            expect(body.hasClass("menu-hidden")).toBe(true);
          });
 
          //Clicks, then checks if the body no longer has the menu-hidden class, then clicks again and checks the opposite
          it('changes the menu visibility when clicked', function() {
             var menuIcon = $('.menu-icon-link');
             menuIcon.click();
-            expect(body.hasClass("menu-hidden")).toBe(false);
+            expect(body.hasClass('menu-hidden')).toBe(false);
             menuIcon.click();
-            expect(body.hasClass("menu-hidden")).toBe(true);
+            expect(body.hasClass('menu-hidden')).toBe(true);
          });
     });
 
@@ -66,10 +66,7 @@ $(function() {
 
         //Use a setTimeout to wait long enough after loading the feed to test
         beforeEach(function (done) {
-            setTimeout(function() {
-                loadFeed(0);
-                done();
-            }, 500);
+            loadFeed(0, done);
         });
 
         //Checks to see if the feed loaded
@@ -86,8 +83,7 @@ $(function() {
         beforeEach(function(done) {
             loadFeed(0);
             info = $('.feed').html();
-            loadFeed(1,done);
-            setTimeout(function(){}, 2000);
+            loadFeed(1, done);
         });
 
         //Check the feed to see if it's different from the original feed
