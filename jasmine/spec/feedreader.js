@@ -17,7 +17,7 @@ $(function() {
          */
         it('are defined', function() {
             expect(allFeeds).toBeDefined();
-            expect(allFeeds.length).not.toBe(0);
+            expect(allFeeds.length).toBeGreaterThan(0);
         });
 
         //Cycles though each feed and checks whether it has a defined URL of length greater than 0
@@ -64,26 +64,28 @@ $(function() {
 
     describe('Initial Entries', function() {
 
-        //Use a setTimeout to wait long enough after loading the feed to test
+        //Load the feed before running the test
         beforeEach(function (done) {
             loadFeed(0, done);
         });
 
         //Checks to see if the feed loaded
-        it('has at least 1 entry in feed container', function(done) {
+        it('has at least 1 entry in feed container', function() {
             expect($('.feed > .entry-link').length).not.toBe(0);
-            done();
         });
     });
 
     describe('New Feed Selection', function() {
 
         var info;
-        //Load the feed, get the DOM element, then load a different feed and set a timeout to wait
+        //Load the feed, get the DOM element, then load a different feed
         beforeEach(function(done) {
-            loadFeed(0);
-            info = $('.feed').html();
-            loadFeed(1, done);
+            $('.feed').empty()
+            loadFeed(0, function() {
+                info = $('.feed').html();
+                loadFeed(1);
+            })
+            done();
         });
 
         //Check the feed to see if it's different from the original feed
