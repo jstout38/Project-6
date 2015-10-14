@@ -30,13 +30,13 @@ $(function() {
         });
 
         //Cycles through each feed and checks whether it has a defined name of length greater than 0
-         it('have a name', function() {
+        it('have a name', function() {
             for (var i = 0; i < allFeeds.length; i++) {
                 expect(allFeeds[i].name).toBeDefined();
                 expect(allFeeds[i].name.length).not.toBe(0);
                 expect(allFeeds[i].name).not.toBe('');
             }
-         });
+        });
     });
 
     describe('the menu', function() {
@@ -80,17 +80,17 @@ $(function() {
         var info;
         //Load the feed, get the DOM element, then load a different feed
         beforeEach(function(done) {
-            $('.feed').empty()
+            $('.feed').empty();
             loadFeed(0, function() {
                 info = $('.feed').html();
-                loadFeed(1);
-            })
-            done();
+                loadFeed(1, done);
+            });
         });
 
         //Check the feed to see if it's different from the original feed
         it('ensures when a new feed loads that the content changes', function() {
             var newInfo = $('.feed').html();
+            console.log(info);
             expect(newInfo).not.toBe(info);
         });
     });
