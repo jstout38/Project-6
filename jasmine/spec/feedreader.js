@@ -90,7 +90,6 @@ $(function() {
         //Check the feed to see if it's different from the original feed
         it('ensures when a new feed loads that the content changes', function() {
             var newInfo = $('.feed').html();
-            console.log(info);
             expect(newInfo).not.toBe(info);
         });
     });
